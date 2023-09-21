@@ -14,7 +14,8 @@ namespace NorthwindWebAPI.Infrastructure.Repository
 
 		public async Task<Product> GetProduct(int id)
 		{
-			throw new NotImplementedException();
+			var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
+			return product;
 		}
 
 		public async Task<IEnumerable<Product>> GetProductList()

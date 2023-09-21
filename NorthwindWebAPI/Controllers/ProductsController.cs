@@ -25,15 +25,20 @@ namespace NorthwindWebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {            
-            var result = await _productService.GetProductList();
-			return Ok(result);
+			return Ok(await _productService.GetProductList());
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            return Ok(await _productService.GetProduct(id));
+			var result = await _productService.GetProduct(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+			return Ok(result);
+            
         }
 
         // PUT: api/Products/5
