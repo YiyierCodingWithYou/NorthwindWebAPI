@@ -1,4 +1,5 @@
 ﻿using NorthwindWebAPI.Infrastructure.Interface;
+using NorthwindWebAPI.Models.Dtos;
 using NorthwindWebAPI.Models.EFModels;
 using NorthwindWebAPI.Service.Interface;
 
@@ -10,6 +11,16 @@ namespace NorthwindWebAPI.Infrastructure.Service
 		public ProductService(IProductRepository repo)
 		{
 			_repo = repo;
+		}
+
+		public async Task<ApiResult> Create(ProductDto dto)
+		{
+			var result =await _repo.Create(dto);
+			if (!result)
+			{
+				return ApiResult.Fail("商品新增失敗。");
+			}
+			return ApiResult.Success("商品新增成功");
 		}
 
 		public async Task<bool> Delete(int id)

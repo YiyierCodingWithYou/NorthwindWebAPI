@@ -1,4 +1,5 @@
 ﻿using NorthwindWebAPI.Infrastructure;
+using NorthwindWebAPI.Models.Dtos;
 using NorthwindWebAPI.Models.EFModels;
 
 namespace NorthwindWebAPI.Service.Interface
@@ -10,5 +11,7 @@ namespace NorthwindWebAPI.Service.Interface
 		Task<Product> GetProduct(int id);
 
 		Task<bool> Delete(int id);
+
+		Task<ApiResult> Create(ProductDto dto);
 	}
 }

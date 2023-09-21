@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Repository\" />
-    <Folder Include="Models\Dtos\" />
     <Folder Include="Models\EFModels\" />
   </ItemGroup>
 

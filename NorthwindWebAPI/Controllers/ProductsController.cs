@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NorthwindWebAPI.Infrastructure;
+using NorthwindWebAPI.Models.Dtos;
 using NorthwindWebAPI.Models.EFModels;
 using NorthwindWebAPI.Service.Interface;
 
@@ -51,9 +52,14 @@ namespace NorthwindWebAPI.Controllers
 
         // POST: api/Products
         [HttpPost]
-        public async Task<ApiResult> PostProduct(Product product)
+        public async Task<ApiResult> PostProduct(ProductDto product)
         {
-			throw new NotImplementedException();
+            var result = await _productService.Create(product);
+            if (result.IsFail)
+            {
+                return ApiResult.Fail(result.Message);
+            }
+            return ApiResult.Success(result.Message);
 		}
 
         // DELETE: api/Products/5
