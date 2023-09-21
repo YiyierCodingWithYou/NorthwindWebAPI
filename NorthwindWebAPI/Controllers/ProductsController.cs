@@ -37,7 +37,7 @@ namespace NorthwindWebAPI.Controllers
 			var result = await _productService.GetProduct(id);
             if (result == null)
             {
-                return NotFound();
+                return NotFound("該商品不存在。");
             }
 			return Ok(result);
             
@@ -45,9 +45,14 @@ namespace NorthwindWebAPI.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public async Task<ApiResult> PutProduct(int id, Product product)
+        public async Task<ApiResult> PutProduct(int id, ProductDto product)
         {
-            throw new NotImplementedException();
+            var result = await _productService.Update(id,product);
+			if (result.IsFail)
+			{
+				return ApiResult.Fail(result.Message);
+			}
+			return ApiResult.Success(result.Message);
 		}
 
         // POST: api/Products
@@ -67,11 +72,11 @@ namespace NorthwindWebAPI.Controllers
         public async Task<ApiResult> Delete(int id)
         {
             var result = await _productService.Delete(id);
-            if (!result)
+            if (result.IsFail)
             {
-                return ApiResult.Fail("商品刪除失敗");
+                return ApiResult.Fail(result.Message);
             }
-            return ApiResult.Success("商品刪除成功");
+            return ApiResult.Success(result.Message);
 		}
 
     }

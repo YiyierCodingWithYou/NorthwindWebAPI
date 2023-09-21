@@ -12,5 +12,7 @@ namespace NorthwindWebAPI.Infrastructure.Interface
 		Task<bool> Delete(int id);
 
 		Task<bool> Create(ProductDto dto);
+
+		Task<bool> Update(ProductDto dto);
 	}
 }

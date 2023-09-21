@@ -31,15 +31,36 @@ VALUES
 			}
 		}
 
+		public async Task<bool> Update(ProductDto dto)
+		{
+			using (var conn = new SqlConnection(_connStr))
+			{
+				string sql = @"UPDATE Products SET 
+ProductName = @ProductName, SupplierID = @SupplierID, CategoryID = @CategoryID, 
+QuantityPerUnit = @QuantityPerUnit, UnitPrice = @UnitPrice,UnitsInStock = @UnitsInStock, 
+UnitsOnOrder = @UnitsOnOrder, ReorderLevel = @ReorderLevel, Discontinued = @Discontinued";
+				var rowAffected = await conn.ExecuteAsync(sql, dto);
+				return rowAffected > 0;
+			}
+
+		}
+
 		public async Task<bool> Delete(int id)
 		{
-			var product = _context.Products.Find(id);
+			var product = await _context.Products.FindAsync(id);
 			if (product == null)
 			{
 				return false;
 			}
-			_context.Products.Remove(product);
-			await _context.SaveChangesAsync();
+			try
+			{
+				_context.Products.Remove(product);
+				await _context.SaveChangesAsync();
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 			return true;
 		}
 
@@ -58,5 +79,7 @@ VALUES
 			}
 			return products.AsEnumerable();
 		}
+
+
 	}
 }

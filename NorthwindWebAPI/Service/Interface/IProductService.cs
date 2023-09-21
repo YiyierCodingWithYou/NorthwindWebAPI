@@ -10,8 +10,9 @@ namespace NorthwindWebAPI.Service.Interface
 
 		Task<Product> GetProduct(int id);
 
-		Task<bool> Delete(int id);
+		Task<ApiResult> Delete(int id);
 
 		Task<ApiResult> Create(ProductDto dto);
+		Task<ApiResult> Update(int id,ProductDto dto);
 	}
 }

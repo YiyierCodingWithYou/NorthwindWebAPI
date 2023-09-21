@@ -23,10 +23,14 @@ namespace NorthwindWebAPI.Infrastructure.Service
 			return ApiResult.Success("商品新增成功");
 		}
 
-		public async Task<bool> Delete(int id)
+		public async Task<ApiResult> Delete(int id)
 		{
 			var result = await _repo.Delete(id);
-			return result;
+			if (!result)
+			{
+				return ApiResult.Fail("該商品不存在或與其他資料有關聯，刪除失敗。");
+			}
+			return ApiResult.Success("刪除成功。");
 		}
 
 		public async Task<Product> GetProduct(int id)
@@ -40,6 +44,33 @@ namespace NorthwindWebAPI.Infrastructure.Service
 			
 			var result = await _repo.GetProductList();
 			return result;
+		}
+
+		public async Task<ApiResult> Update(int id,ProductDto dto)
+		{
+			var product = await _repo.GetProduct(id);
+			if (product == null)
+			{
+				return ApiResult.Fail("該商品不存在。");
+			}
+			var updateProduct = new ProductDto()
+			{
+				ProductName = dto.ProductName,
+				SupplierId = dto.SupplierId,
+				CategoryId = dto.CategoryId,
+				QuantityPerUnit = dto.QuantityPerUnit,
+				UnitPrice = dto.UnitPrice,
+				UnitsInStock = dto.UnitsInStock,
+				UnitsOnOrder = dto.UnitsOnOrder,
+				ReorderLevel = dto.ReorderLevel,
+				Discontinued = dto.Discontinued
+			};
+			var result = await _repo.Update(updateProduct);
+			if (!result)
+			{
+				return ApiResult.Fail("商品更新失敗。");
+			}
+			return ApiResult.Success("商品更新成功。");
 		}
 	}
 }
