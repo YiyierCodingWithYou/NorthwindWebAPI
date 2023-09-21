@@ -12,6 +12,18 @@ namespace NorthwindWebAPI.Infrastructure.Repository
 			_context = context;
 		}
 
+		public async Task<bool> Delete(int id)
+		{
+			var product = _context.Products.Find(id);
+			if (product == null)
+			{
+				return false;
+			}
+			_context.Products.Remove(product);
+			await _context.SaveChangesAsync();
+			return true;
+		}
+
 		public async Task<Product> GetProduct(int id)
 		{
 			var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);

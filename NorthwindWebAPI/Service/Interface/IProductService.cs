@@ -1,4 +1,5 @@
-﻿using NorthwindWebAPI.Models.EFModels;
+﻿using NorthwindWebAPI.Infrastructure;
+using NorthwindWebAPI.Models.EFModels;
 
 namespace NorthwindWebAPI.Service.Interface
 {
@@ -7,5 +8,7 @@ namespace NorthwindWebAPI.Service.Interface
 		Task<IEnumerable<Product>> GetProductList();
 
 		Task<Product> GetProduct(int id);
+
+		Task<bool> Delete(int id);
 	}
 }

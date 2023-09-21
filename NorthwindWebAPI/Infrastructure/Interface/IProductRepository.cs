@@ -7,5 +7,7 @@ namespace NorthwindWebAPI.Infrastructure.Interface
 		Task<IEnumerable<Product>> GetProductList();
 
 		Task<Product> GetProduct(int id);
+
+		Task<bool> Delete(int id);
 	}
 }

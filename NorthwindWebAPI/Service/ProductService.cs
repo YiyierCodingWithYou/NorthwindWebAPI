@@ -12,9 +12,15 @@ namespace NorthwindWebAPI.Infrastructure.Service
 			_repo = repo;
 		}
 
-		public Task<Product> GetProduct(int id)
+		public async Task<bool> Delete(int id)
 		{
-			var result = _repo.GetProduct(id);
+			var result = await _repo.Delete(id);
+			return result;
+		}
+
+		public async Task<Product> GetProduct(int id)
+		{
+			var result =await _repo.GetProduct(id);
 			return result;
 		}
 
