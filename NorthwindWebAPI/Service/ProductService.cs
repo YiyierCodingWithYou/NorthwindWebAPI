@@ -12,9 +12,16 @@ namespace NorthwindWebAPI.Infrastructure.Service
 			_repo = repo;
 		}
 
-		public Task<IEnumerable<Product>> Get()
+		public Task<Product> GetProduct(int id)
 		{
 			throw new NotImplementedException();
+		}
+
+		public async Task<IEnumerable<Product>> GetProductList()
+		{
+			
+			var result = await _repo.GetProductList();
+			return result;
 		}
 	}
 }

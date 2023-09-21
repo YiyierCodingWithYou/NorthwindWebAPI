@@ -24,27 +24,26 @@ namespace NorthwindWebAPI.Controllers
         // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
-        {
-            return Ok(await _productService.Get());
+        {            
+            var result = await _productService.GetProductList();
+			return Ok(result);
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-          throw new NotImplementedException();
+            return Ok(await _productService.GetProduct(id));
         }
 
         // PUT: api/Products/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<ActionResult> PutProduct(int id, Product product)
         {
-			throw new NotImplementedException();
+            return Ok();
 		}
 
         // POST: api/Products
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {

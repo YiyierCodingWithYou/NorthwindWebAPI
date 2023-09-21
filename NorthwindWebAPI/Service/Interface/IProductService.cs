@@ -4,6 +4,8 @@ namespace NorthwindWebAPI.Service.Interface
 {
 	public interface IProductService
 	{
-		Task<IEnumerable<Product>> Get();
+		Task<IEnumerable<Product>> GetProductList();
+
+		Task<Product> GetProduct(int id);
 	}
 }
