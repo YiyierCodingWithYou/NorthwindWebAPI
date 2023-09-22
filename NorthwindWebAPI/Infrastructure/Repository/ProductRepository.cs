@@ -10,10 +10,11 @@ namespace NorthwindWebAPI.Infrastructure.Repository
 	public class ProductRepository : IProductRepository
 	{
 		private readonly AppDbContext _context;
-		private readonly string _connStr = @"Server=(LocalDB)\MSSQLLocalDB;Database=Northwind;Trusted_Connection=True;";
-		public ProductRepository(AppDbContext context)
+		private readonly string _connStr;
+		public ProductRepository(AppDbContext context,IConfiguration configuration)
 		{
 			_context = context;
+			_connStr = configuration.GetConnectionString("DefaultConnection");
 		}
 
 		public async Task<bool> Create(ProductDto dto)
@@ -38,7 +39,8 @@ VALUES
 				string sql = @"UPDATE Products SET 
 ProductName = @ProductName, SupplierID = @SupplierID, CategoryID = @CategoryID, 
 QuantityPerUnit = @QuantityPerUnit, UnitPrice = @UnitPrice,UnitsInStock = @UnitsInStock, 
-UnitsOnOrder = @UnitsOnOrder, ReorderLevel = @ReorderLevel, Discontinued = @Discontinued";
+UnitsOnOrder = @UnitsOnOrder, ReorderLevel = @ReorderLevel, Discontinued = @Discontinued
+WHERE ProductID = @ProductID";
 				var rowAffected = await conn.ExecuteAsync(sql, dto);
 				return rowAffected > 0;
 			}
@@ -73,10 +75,6 @@ UnitsOnOrder = @UnitsOnOrder, ReorderLevel = @ReorderLevel, Discontinued = @Disc
 		public async Task<IEnumerable<Product>> GetProductList()
 		{
 			var products = await _context.Products.ToListAsync();
-			if (products == null)
-			{
-				return Enumerable.Empty<Product>();
-			}
 			return products.AsEnumerable();
 		}
 

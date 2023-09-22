@@ -55,6 +55,7 @@ namespace NorthwindWebAPI.Infrastructure.Service
 			}
 			var updateProduct = new ProductDto()
 			{
+				ProductId = dto.ProductId,
 				ProductName = dto.ProductName,
 				SupplierId = dto.SupplierId,
 				CategoryId = dto.CategoryId,
